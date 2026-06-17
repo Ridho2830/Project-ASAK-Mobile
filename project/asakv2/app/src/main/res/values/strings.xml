@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ASAK v2</string>
+
+    <!-- Auth -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="name">Nama</string>
+    <string name="logout">Logout</string>
+    <string name="no_account">Belum punya akun? Daftar</string>
+    <string name="has_account">Sudah punya akun? Login</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Beranda</string>
+    <string name="nav_achievement">Achievement</string>
+    <string name="nav_ar">AR</string>
+    <string name="nav_quiz">Quiz</string>
+    <string name="nav_profile">Profil</string>
+
+    <!-- Home -->
+    <string name="home_title">Beranda</string>
+    <string name="xp_label">XP</string>
+    <string name="streak_label">Streak</string>
+    <string name="level_label">Level</string>
+
+    <!-- Quiz -->
+    <string name="quiz_result">Hasil Quiz</string>
+    <string name="quiz_score">Skor: %d/%d</string>
+    <string name="quiz_xp_earned">+%d XP</string>
+    <string name="quiz_retry">Ulangi Quiz</string>
+
+    <!-- AI Tutor -->
+    <string name="ai_tutor_title">AI Tutor</string>
+    <string name="ai_tutor_hint">Ketik pesan...</string>
+    <string name="ai_tutor_send">Kirim</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profil</string>
+    <string name="change_name">Ubah Nama</string>
+
+    <!-- AR -->
+    <string name="ar_scan_title">Scan AR</string>
+    <string name="ar_unlock_title">Unlock AR Budaya</string>
+    <string name="ar_unlock_confirm">Konfirmasi Unlock</string>
+
+    <!-- Achievement -->
+    <string name="achievement_title">Achievement</string>
+    <string name="achievement_locked">Terkunci</string>
+    <string name="achievement_display">Tampilkan di Profil</string>
+
+    <!-- Firebase / Google Auth -->
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID.apps.googleusercontent.com</string>
+</resources>

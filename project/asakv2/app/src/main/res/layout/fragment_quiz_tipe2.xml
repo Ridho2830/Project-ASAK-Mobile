@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- [RENDI] Quiz Tipe 2: Audio → pilih gambar aksara -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- TODO: Audio play button, 4 gambar aksara sebagai opsi, progress indicator -->
+
+    <ImageButton
+        android:id="@+id/btn_play_audio"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:contentDescription="Play Audio"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

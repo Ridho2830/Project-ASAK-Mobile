@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "299735760307",
+    "project_id": "asakmobile-5c462",
+    "storage_bucket": "asakmobile-5c462.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299735760307:android:249837becc13669e971fc6",
+        "android_client_info": {
+          "package_name": "com.unram.asakv2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299735760307-k15mcnlsqshd16beovhv1uldsqfefpro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unram.asakv2",
+            "certificate_hash": "60f7b143b7f036091a145acc4c15623775cf0478"
+          }
+        },
+        {
+          "client_id": "299735760307-7bdpi884phbkdvh809vn2n0q4ph5nps9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5iB3MPhyQG5O7eL-0R8axjOMiiJg7Dog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299735760307-7bdpi884phbkdvh809vn2n0q4ph5nps9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

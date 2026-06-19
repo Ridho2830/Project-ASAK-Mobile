@@ -2,18 +2,20 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
-    // TODO: Uncomment setelah menambahkan google-services.json dari Firebase Console
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
+    // The google-services plugin must be applied after the Kotlin plugin
     alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.unram.asakv2"
-    compileSdk = 37
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.unram.asakv2"
         minSdk = 26
-        targetSdk = 37
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -65,6 +67,11 @@ dependencies {
 
     // DataStore Preferences
     implementation(libs.androidx.datastore.preferences)
+
+    // Room Database
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Firebase (BOM)
     implementation(platform(libs.firebase.bom))

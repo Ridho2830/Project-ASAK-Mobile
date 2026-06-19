@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/achievementFragment"
-        android:name="com.unram.asakv2.ui.achievement.AchievementFragment"
-        android:label="@string/nav_achievement"
-        tools:layout="@layout/fragment_achievement" />
+        android:name="com.unram.asakv2.presentation.leaderboard.LeaderboardFragment"
+        android:label="@string/nav_leaderboard"
+        tools:layout="@layout/fragment_leaderboard" />
 
     <fragment
         android:id="@+id/profileFragment"

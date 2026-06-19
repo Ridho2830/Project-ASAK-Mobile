@@ -15,7 +15,7 @@
     <item
         android:id="@+id/achievementFragment"
         android:icon="@drawable/ic_achievement"
-        android:title="@string/nav_achievement" />
+        android:title="@string/nav_leaderboard" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_profile"

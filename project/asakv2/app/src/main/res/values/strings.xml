@@ -16,6 +16,7 @@
     <!-- Navigation -->
     <string name="nav_home">Beranda</string>
     <string name="nav_achievement">Achievement</string>
+    <string name="nav_leaderboard">Leaderboard</string>
     <string name="nav_ar">AR</string>
     <string name="nav_quiz">Quiz</string>
     <string name="nav_profile">Profil</string>

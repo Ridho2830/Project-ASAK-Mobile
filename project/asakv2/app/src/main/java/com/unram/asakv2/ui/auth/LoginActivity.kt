@@ -97,7 +97,6 @@ class LoginActivity : AppCompatActivity() {
 
         authViewModel.loginResult.observe(this) { result ->
             result.onSuccess {
-                Toast.makeText(this, "Welcome!", Toast.LENGTH_SHORT).show()
                 navigateToMain()
             }.onFailure { exception ->
                 Toast.makeText(this, "Login failed: ${exception.message}", Toast.LENGTH_LONG).show()

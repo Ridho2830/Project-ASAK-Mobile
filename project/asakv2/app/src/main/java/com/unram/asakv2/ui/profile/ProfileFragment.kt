@@ -61,7 +61,8 @@ class ProfileFragment : Fragment() {
                 binding.tvUserEmail.text = user.email
                 binding.tvXp.text = user.xp.toString()
                 binding.tvLevel.text = user.level.toString()
-                binding.tvStreak.text = user.streak.toString()
+                binding.tvSesi.text = user.streak.toString() // Gunakan streak sebagai mock sesi belajar sementara
+                binding.tvAkurasi.text = "85%" // Mock akurasi
                 binding.tvAchievement.text = if (user.selectedAchievement.isNotEmpty()) user.selectedAchievement else "Belum Ada"
 
                 if (user.photoUrl.isNotEmpty()) {

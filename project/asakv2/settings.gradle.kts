@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "asakv2"
 include(":app")
+include(":ktor-backend")

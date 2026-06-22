@@ -6,9 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.unram.asakv2.model.UserAchievement
 import com.unram.asakv2.repository.AchievementRepository
 
-/**
- * AchievementViewModel — Mengelola list achievement dan pemilahan achievement terpilih untuk profil.
- */
 class AchievementViewModel : ViewModel() {
 
     private val achievementRepository = AchievementRepository()
@@ -28,7 +25,6 @@ class AchievementViewModel : ViewModel() {
                 val list = result.getOrDefault(emptyList())
                 _achievements.postValue(list)
                 
-                // Presisi index slot: map selectedIds ke UserAchievement atau null
                 val selected = selectedIds.map { id ->
                     list.find { it.achievementId == id }
                 }

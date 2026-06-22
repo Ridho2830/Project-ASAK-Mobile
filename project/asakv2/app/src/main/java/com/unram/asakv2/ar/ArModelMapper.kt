@@ -2,11 +2,6 @@ package com.unram.asakv2.ar
 
 object ArModelMapper {
 
-    /**
-     * Kategori aset AR:
-     * - AKSARA: Aksara Sasak (18 huruf)
-     * - BUDAYA: Budaya Sasak (20 item)
-     */
     enum class Category {
         AKSARA,
         BUDAYA
@@ -20,7 +15,7 @@ object ArModelMapper {
     )
 
     val assets = listOf(
-        // ===== AKSARA (18 huruf aksara Sasak) =====
+        
         ArAssetInfo("ha", "ar/models/aksara/Ha.glb", "ar/markers/aksara/1. Ha.jpg", Category.AKSARA),
         ArAssetInfo("na", "ar/models/aksara/Na.glb", "ar/markers/aksara/2. Na_qrcode.jpg", Category.AKSARA),
         ArAssetInfo("ca", "ar/models/aksara/Ca.glb", "ar/markers/aksara/3. Ca.jpg", Category.AKSARA),
@@ -40,7 +35,6 @@ object ArModelMapper {
         ArAssetInfo("ya", "ar/models/aksara/Ya.glb", "ar/markers/aksara/17. Ya.jpg", Category.AKSARA),
         ArAssetInfo("nya", "ar/models/aksara/Nya.glb", "ar/markers/aksara/18. Nya.jpg", Category.AKSARA),
 
-        // ===== BUDAYA (20 item budaya Sasak) =====
         ArAssetInfo("air_terjun", "ar/models/budaya/AirTerjun.glb", "ar/markers/budaya/AirTerjun.jpg", Category.BUDAYA),
         ArAssetInfo("bau_nyale", "ar/models/budaya/BauNyale.glb", "ar/markers/budaya/BauNyale.jpg", Category.BUDAYA),
         ArAssetInfo("begasingan", "ar/models/budaya/begasingan.glb", "ar/markers/budaya/Begasingan.jpg", Category.BUDAYA),

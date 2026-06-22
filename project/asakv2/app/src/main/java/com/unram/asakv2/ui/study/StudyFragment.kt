@@ -43,26 +43,22 @@ class StudyFragment : Fragment() {
 
         profileViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
-                // Gunakan progress stage dari Firestore agar sinkron
+                
                 setupCombinedKatalog(user)
             }
         }
 
-        // Tampilkan katalog awal dari data lokal dulu
         setupCombinedKatalog(null)
 
-        // Bubble 1: scroll ke seksi Huruf Aksara (posisi 0)
         fabAksara.setOnClickListener {
             rvKatalog.smoothScrollToPosition(0)
         }
 
-        // Bubble 2: scroll ke seksi Wisata Lombok (posisi 19)
         fabWisata.setOnClickListener {
             rvKatalog.smoothScrollToPosition(19)
             Toast.makeText(context, "Navigasi ke: Wisata Lombok", Toast.LENGTH_SHORT).show()
         }
 
-        // Bubble 3: scroll ke seksi Budaya Sasak (posisi 28)
         fabBudaya.setOnClickListener {
             rvKatalog.smoothScrollToPosition(28)
             Toast.makeText(context, "Navigasi ke: Budaya Sasak", Toast.LENGTH_SHORT).show()
@@ -81,14 +77,14 @@ class StudyFragment : Fragment() {
 
     private fun setupCombinedKatalog(user: com.unram.asakv2.model.User?) {
         val masterList = mutableListOf<StudyItem>().apply {
-            add(StudyItem("header_aksara", "Huruf Aksara", StudyType.HEADER_HURUF)) // index 0
-            addAll(getKatalogHuruf())                                               // index 1–18
+            add(StudyItem("header_aksara", "Huruf Aksara", StudyType.HEADER_HURUF)) 
+            addAll(getKatalogHuruf())                                               
 
-            add(StudyItem("header_wisata", "Wisata Lombok", StudyType.HEADER_WISATA)) // index 19
-            addAll(getKatalogWisata())                                              // index 20–27
+            add(StudyItem("header_wisata", "Wisata Lombok", StudyType.HEADER_WISATA)) 
+            addAll(getKatalogWisata())                                              
 
-            add(StudyItem("header_budaya", "Budaya Sasak", StudyType.HEADER_BUDAYA))  // index 28
-            addAll(getKatalogBudaya())                                              // index 29–40
+            add(StudyItem("header_budaya", "Budaya Sasak", StudyType.HEADER_BUDAYA))  
+            addAll(getKatalogBudaya())                                              
         }
 
         val adapter = CombinedStudyAdapter(
@@ -136,8 +132,7 @@ class StudyFragment : Fragment() {
         val glm = GridLayoutManager(context, 2)
         glm.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
-                // TYPE_HEADER (0) dan TYPE_WISATA_BUDAYA (2) = full width (span 2)
-                // TYPE_HURUF (1) = setengah lebar (span 1)
+                
                 return if (adapter.getItemViewType(position) == 1) 1 else 2
             }
         }
@@ -190,6 +185,6 @@ class StudyFragment : Fragment() {
         StudyItem("budaya_santekan",    "Santekan",       StudyType.BUDAYA, achievementKey = "ach_santekan"),
         StudyItem("budaya_nyongkolan",  "Nyongkolan",     StudyType.BUDAYA, achievementKey = "ach_nyongkolan"),
         StudyItem("budaya_misoq",       "Misoq Meniq",    StudyType.BUDAYA, achievementKey = "ach_misoq"),
-        StudyItem("budaya_gula",        "Gula Gending",   StudyType.BUDAYA, achievementKey = "ach_gula")
+        StudyItem("budaya_presean",     "Presean",        StudyType.BUDAYA, achievementKey = "ach_presean")
     )
 }

@@ -9,7 +9,6 @@ object ProgressManager {
     private const val KEY_STAGE  = "current_stage"
     private const val KEY_BAGIAN = "current_bagian"
 
-    // Prefix key untuk status AR sub-stage per stage
     private const val KEY_AR_PREFIX = "ar_completed_stage_"
 
     private fun prefs(context: Context): SharedPreferences =
@@ -21,17 +20,11 @@ object ProgressManager {
     fun getCurrentBagian(context: Context): Int =
         prefs(context).getInt(KEY_BAGIAN, 1)
 
-    /**
-     * Maju ke bagian/stage berikutnya.
-     * Hanya dipanggil jika user LULUS (accuracy >= 75%).
-     * Mengembalikan progress terbaru (nextStage, nextBagian).
-     */
     fun advanceProgress(context: Context, stageId: Int, bagianId: Int): Pair<Int, Int> {
         val totalBagian   = com.unram.asakv2.quiz.QuizScenario.allStages[stageId]?.size ?: return Pair(stageId, bagianId)
         val currentStage  = getCurrentStage(context)
         val currentBagian = getCurrentBagian(context)
 
-        // Hanya maju jika yang diselesaikan adalah bagian aktif
         if (stageId != currentStage || bagianId != currentBagian) return Pair(currentStage, currentBagian)
 
         val (nextStage, nextBagian) = if (bagianId >= totalBagian) {
@@ -50,7 +43,6 @@ object ProgressManager {
         return Pair(nextStage, nextBagian)
     }
 
-    /** Sinkronisasi progress lokal dari data server (Firestore) */
     fun syncLocalProgress(context: Context, serverStage: Int, serverBagian: Int) {
         val localStage = getCurrentStage(context)
         val localBagian = getCurrentBagian(context)
@@ -63,14 +55,12 @@ object ProgressManager {
         }
     }
 
-    /** Simpan status AR sub-stage tertentu sudah selesai. */
     fun setArCompleted(context: Context, stageId: Int) {
         prefs(context).edit()
             .putBoolean("$KEY_AR_PREFIX$stageId", true)
             .apply()
     }
 
-    /** Cek apakah AR sub-stage stageId sudah selesai. */
     fun isArCompleted(context: Context, stageId: Int): Boolean =
         prefs(context).getBoolean("$KEY_AR_PREFIX$stageId", false)
 
@@ -83,7 +73,6 @@ object ProgressManager {
         return currentStage > stageId || (currentStage == stageId && currentBagian > 4)
     }
 
-    /** Reset progress ke awal (untuk testing). */
     fun resetProgress(context: Context) {
         val editor = prefs(context).edit()
         editor.putInt(KEY_STAGE, 1)

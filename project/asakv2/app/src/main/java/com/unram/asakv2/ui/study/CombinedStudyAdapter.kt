@@ -70,7 +70,6 @@ class CombinedStudyAdapter(
                 holder.tvName.text = item.name
                 holder.tvSub.text = "[${item.id.lowercase()}]"
 
-                // Load gambar aksara secara asinkron menggunakan Glide agar tidak memblokir main thread
                 Glide.with(context)
                     .load("file:///android_asset/aksara/gambar/${item.id.lowercase()}.png")
                     .placeholder(R.drawable.ic_book)
@@ -86,7 +85,7 @@ class CombinedStudyAdapter(
                     holder.card.setCardBackgroundColor(Color.WHITE)
                     holder.ivLock.visibility = View.GONE
                     holder.card.setOnClickListener {
-                        // Tap kartu = putar audio
+                        
                         try {
                             val mediaPlayer = MediaPlayer()
                             val afd = context.assets.openFd(
@@ -161,7 +160,7 @@ class CombinedStudyAdapter(
                     "ach_santekan" -> "santekan"
                     "ach_nyongkolan" -> "nyongkolan"
                     "ach_misoq" -> "bisoq_meniq"
-                    "ach_gula" -> "gula_gending"
+                    "ach_presean" -> "presean"
                     else -> item.achievementKey.removePrefix("ach_")
                 }
 
@@ -182,7 +181,7 @@ class CombinedStudyAdapter(
                 val achievementId = when (item.achievementKey) {
                     "ach_tenun" -> "newbie"
                     "ach_gerabah" -> "ubah_nama"
-                    "ach_gula" -> "ubah_tagline"
+                    "ach_presean" -> "ubah_tagline"
                     "ach_misoq" -> "ubah_foto"
                     "ach_menutu" -> "ubah_achievement"
                     "ach_begasingan" -> "penggunaan_ar"

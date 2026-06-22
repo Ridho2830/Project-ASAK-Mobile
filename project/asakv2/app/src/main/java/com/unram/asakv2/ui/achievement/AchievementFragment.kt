@@ -20,7 +20,7 @@ class AchievementFragment : Fragment() {
     private val vm: AchievementViewModel by activityViewModels()
 
     private var isEditMode = false
-    private var selectedSlotIndex: Int = -1   // slot yang sedang di-highlight
+    private var selectedSlotIndex: Int = -1   
 
     private lateinit var showcaseAdapter: ShowcaseAdapter
     private lateinit var achievementAdapter: AchievementGridAdapter
@@ -40,7 +40,6 @@ class AchievementFragment : Fragment() {
         vm.refresh()
     }
 
-    // ── Sort bar ──────────────────────────────────────────────────────────────
     private fun setupSortBar() {
         val sortButtons = listOf(
             binding.btnSortDefault  to AchievementViewModel.SortType.DEFAULT,
@@ -53,7 +52,7 @@ class AchievementFragment : Fragment() {
                 if (vm.sortType == type) {
                     vm.toggleSortDirection()
                 } else {
-                    vm.changeSortType(type)   // <-- ganti dari setSortType
+                    vm.changeSortType(type)   
                 }
                 updateSortUI()
             }
@@ -62,7 +61,7 @@ class AchievementFragment : Fragment() {
     }
 
     private fun updateSortUI() {
-        // Pakai icon bawaan Android sementara (ganti dengan vector kamu nanti)
+        
         binding.ivSortArrow.setImageResource(
             if (vm.sortAscending) R.drawable.arrow_up_float
             else R.drawable.arrow_down_float
@@ -82,7 +81,6 @@ class AchievementFragment : Fragment() {
         activeMap[vm.sortType]?.isSelected = true
     }
 
-    // ── Showcase (4 slot atas) ────────────────────────────────────────────────
     private fun setupShowcase() {
         showcaseAdapter = ShowcaseAdapter(
             slots = List(4) { null },
@@ -98,14 +96,14 @@ class AchievementFragment : Fragment() {
 
     private fun onShowcaseSlotClick(index: Int) {
         if (!isEditMode) {
-            // Mode normal: tap slot kosong → langsung pilih (highlight slot, tunggu tap bawah)
+            
             if (vm.showcaseSlots.value?.get(index) == null) {
                 selectedSlotIndex = if (selectedSlotIndex == index) -1 else index
                 showcaseAdapter.updateSelectedSlot(selectedSlotIndex)
             }
             return
         }
-        // Mode edit: tap slot berisi → tidak ada aksi (- button yang handle)
+        
         if (vm.showcaseSlots.value?.get(index) == null) {
             selectedSlotIndex = if (selectedSlotIndex == index) -1 else index
             showcaseAdapter.updateSelectedSlot(selectedSlotIndex)
@@ -118,7 +116,6 @@ class AchievementFragment : Fragment() {
         showcaseAdapter.updateSelectedSlot(selectedSlotIndex)
     }
 
-    // ── Achievement grid (20 kotak bawah) ────────────────────────────────────
     private fun setupAchievementGrid() {
         achievementAdapter = AchievementGridAdapter(
             items = emptyList(),
@@ -133,7 +130,6 @@ class AchievementFragment : Fragment() {
         val unlocked = vm.repo.isUnlocked(def.id)
         val claimed  = vm.repo.isClaimed(def.id)
 
-        // Kalau ada slot aktif (highlighted) atau mode edit → isi slot
         if (selectedSlotIndex >= 0 && unlocked) {
             vm.setShowcaseSlot(selectedSlotIndex, def.id)
             selectedSlotIndex = -1
@@ -141,7 +137,7 @@ class AchievementFragment : Fragment() {
             return
         }
         if (isEditMode && unlocked && selectedSlotIndex < 0) {
-            // Mode edit, belum pilih slot → cari slot kosong pertama dari kiri-atas
+            
             val emptySlot = vm.showcaseSlots.value?.indexOfFirst { it == null } ?: -1
             if (emptySlot >= 0) {
                 vm.setShowcaseSlot(emptySlot, def.id)
@@ -149,7 +145,6 @@ class AchievementFragment : Fragment() {
             return
         }
 
-        // Bukan mode edit, tidak ada slot aktif → tampilkan dialog info
         if (!unlocked) {
             showLockedDialog(def)
         } else if (!claimed) {
@@ -179,7 +174,6 @@ class AchievementFragment : Fragment() {
         ).show(childFragmentManager, "info_unlocked")
     }
 
-    // ── Edit / Save button ────────────────────────────────────────────────────
     private fun setupEditButton() {
         binding.btnEdit.setOnClickListener {
             isEditMode = !isEditMode
@@ -192,7 +186,6 @@ class AchievementFragment : Fragment() {
         }
     }
 
-    // ── Observe ───────────────────────────────────────────────────────────────
     private fun observeViewModel() {
         vm.achievements.observe(viewLifecycleOwner) { list ->
             achievementAdapter.updateList(list)
@@ -202,7 +195,7 @@ class AchievementFragment : Fragment() {
             showcaseAdapter.updateSlots(slots)
         }
         vm.hasUnclaimed.observe(viewLifecycleOwner) { has ->
-            // Notify MainActivity untuk dot merah di navbar
+            
             (activity as? MainActivity)?.setAchievementDot(has)
         }
     }

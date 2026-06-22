@@ -71,20 +71,16 @@ class QuizTipe3Fragment : Fragment() {
         binding.btnNext.alpha = 0.5f
 
         if (isStreakMode) {
-            // Mode streak: tombol alat disembunyikan, submit otomatis saat angkat pensil
+            
             binding.btnPensil.visibility     = View.GONE
             binding.btnHapus.visibility      = View.GONE
             binding.btnBersihkan.visibility  = View.GONE
         } else {
-            // Mode bebas (dari halaman Belajar):
-            // ✏ Pensil  → mode tulis (default)
-            // Hapus Semua → clearCanvas (tidak submit)
-            // 🧹 Penghapus → toggle ke mode eraser (submit saat angkat tetap jalan)
+            
             binding.btnPensil.visibility     = View.VISIBLE
             binding.btnHapus.visibility      = View.VISIBLE
             binding.btnBersihkan.visibility  = View.VISIBLE
 
-            // Awal: mode pensil aktif (warna merah = aktif)
             updateToolButtonState(isPenActive = true)
 
             binding.btnPensil.setOnClickListener {
@@ -93,7 +89,7 @@ class QuizTipe3Fragment : Fragment() {
             }
 
             binding.btnHapus.setOnClickListener {
-                // Hapus semua — bersihkan kanvas, tidak submit ke AI
+                
                 binding.canvasView.clearCanvas()
                 binding.tvStatus.text = "Kanvas dibersihkan. Mulai lagi!"
             }
@@ -103,11 +99,9 @@ class QuizTipe3Fragment : Fragment() {
                 updateToolButtonState(isPenActive = false)
             }
 
-            // Sembunyikan btnNext di mode bebas — tidak ada lanjut
             binding.btnNext.visibility = View.GONE
         }
 
-        // Listener angkat jari → submit ke AI (berlaku di KEDUA mode)
         binding.canvasView.onStrokeEndListener = object : CanvasView.OnStrokeEndListener {
             override fun onStrokeEnd(bitmap: Bitmap) {
                 if (!isWaitingForResult) {
@@ -118,11 +112,6 @@ class QuizTipe3Fragment : Fragment() {
         }
     }
 
-    /**
-     * Update visual tombol alat:
-     * - Tombol aktif: warna merah (terlihat dipilih)
-     * - Tombol tidak aktif: warna abu-abu
-     */
     private fun updateToolButtonState(isPenActive: Boolean) {
         val activeColor   = Color.parseColor("#e74c3c")
         val inactiveColor = Color.parseColor("#9E9E9E")
@@ -154,7 +143,7 @@ class QuizTipe3Fragment : Fragment() {
         attemptCount++
 
         if (!isStreakMode) {
-            // Mode bebas: tampilkan akurasi saja, canvas tidak direset otomatis
+            
             binding.tvStatus.text = if (isAccurate)
                 "Akurasi: ${score.toInt()}% ✅ Tepat!"
             else
@@ -162,7 +151,6 @@ class QuizTipe3Fragment : Fragment() {
             return
         }
 
-        // Mode streak
         when {
             isAccurate -> {
                 val expEarned = XpCalculator.calculateRetryExp(

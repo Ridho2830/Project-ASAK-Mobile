@@ -43,7 +43,6 @@ class AchievementViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
-    // Renamed dari setSortType → changeSortType untuk hindari clash dengan Kotlin setter
     fun changeSortType(type: SortType) {
         sortType = type
         if (type == SortType.DEFAULT) sortAscending = true

@@ -62,7 +62,6 @@ class VoiceRecognizer(private val context: Context) {
                 return 0f
             }
 
-            // ── Step 1: Upload file ─────────────────────────────
             val filePart = MultipartBody.Part.createFormData(
                 "files", audioFile.name,
                 audioFile.asRequestBody("audio/mp4".toMediaType())
@@ -75,11 +74,9 @@ class VoiceRecognizer(private val context: Context) {
             val tmpPath = uploadResp.body()?.firstOrNull() ?: return 0f
             Log.d(TAG, "Upload sukses: $tmpPath")
 
-            // ── Step 2: Join queue ──────────────────────────────
             val sessionHash = UUID.randomUUID().toString().replace("-", "").take(12)
             val target = targetLabel.lowercase()
 
-            // Input order dari config: inputs=[15, 14] = [audio, dropdown]
             val audioPayload = mapOf(
                 "path" to tmpPath,
                 "meta" to mapOf("_type" to "gradio.FileData")
@@ -88,7 +85,7 @@ class VoiceRecognizer(private val context: Context) {
             val joinResp = RetrofitClient.voiceApi.joinQueue(
                 GradioQueueRequest(
                     data = listOf(audioPayload, target),
-                    fn_index = 1,  // predict_target = dependency id 1
+                    fn_index = 1,  
                     session_hash = sessionHash
                 )
             )
@@ -98,8 +95,6 @@ class VoiceRecognizer(private val context: Context) {
             }
             Log.d(TAG, "Join queue sukses, session: $sessionHash")
 
-            // ── Step 3: Poll hasil SSE ──────────────────────────
-            // Retry beberapa kali sampai dapat hasil
             repeat(30) { attempt ->
                 kotlinx.coroutines.delay(1000L)
 
@@ -109,15 +104,12 @@ class VoiceRecognizer(private val context: Context) {
                 val raw = pollResp.body()?.string() ?: return@repeat
                 Log.d(TAG, "Poll attempt $attempt: $raw")
 
-                // Cari baris "data:" yang mengandung output
-                // SSE format: "data: {...}"
                 val lines = raw.lines()
                 for (line in lines) {
                     if (!line.startsWith("data:")) continue
                     val json = line.removePrefix("data:").trim()
                     if (json.contains("\"msg\":\"process_completed\"")) {
-                        // Parse skor dari output markdown
-                        // output[0] = teks markdown hasil predict_target
+                        
                         val regex = Regex("""(\d+(?:\.\d+)?)\s*%""")
                         val score = regex.find(json)?.groupValues?.get(1)?.toFloatOrNull()
                         if (score != null) {
@@ -146,6 +138,3 @@ class VoiceRecognizer(private val context: Context) {
         outputFile = null
     }
 }
-
-
-

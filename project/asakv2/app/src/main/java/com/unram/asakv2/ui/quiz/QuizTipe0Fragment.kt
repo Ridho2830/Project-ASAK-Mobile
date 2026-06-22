@@ -51,11 +51,10 @@ class QuizTipe0Fragment : Fragment() {
     }
 
     private fun setupDisplay() {
-        // Tampilkan nama huruf dalam alfabet (misal: "Ha", "Na", dll)
+        
         val displayName = Constants.HURUF_DISPLAY[hurufId] ?: hurufId.replaceFirstChar { it.uppercase() }
         binding.tvHurufLatin.text = displayName
 
-        // Tampilkan gambar aksara dari assets
         try {
             val inputStream = requireContext().assets.open("aksara/gambar/$hurufId.png")
             val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
@@ -64,23 +63,21 @@ class QuizTipe0Fragment : Fragment() {
             binding.ivAksara.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        // Tombol Next awalnya disabled — harus tekan suara dulu
         binding.btnNext.isEnabled = false
         binding.btnNext.alpha = 0.5f
 
-        // Tombol putar suara
         binding.btnPlaySound.setOnClickListener {
             playSound()
         }
 
         binding.btnNext.setOnClickListener {
-            // Lanjut ke soal berikutnya — kirim hasil ke parent
+            
             notifyParent(expFull, true)
         }
     }
 
     private fun playSound() {
-        // Release player lama kalau ada
+        
         mediaPlayer?.release()
         mediaPlayer = null
 
@@ -91,7 +88,7 @@ class QuizTipe0Fragment : Fragment() {
                 prepare()
                 start()
                 setOnCompletionListener {
-                    // Aktifkan tombol Next setelah suara selesai (minimal 1x)
+                    
                     if (!hasPlayedSound) {
                         hasPlayedSound = true
                         binding.btnNext.isEnabled = true
@@ -101,7 +98,7 @@ class QuizTipe0Fragment : Fragment() {
             }
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Audio tidak ditemukan", Toast.LENGTH_SHORT).show()
-            // Tetap aktifkan next kalau audio error agar tidak stuck
+            
             if (!hasPlayedSound) {
                 hasPlayedSound = true
                 binding.btnNext.isEnabled = true

@@ -16,11 +16,6 @@ import com.unram.asakv2.databinding.ActivityLoginBinding
 import com.unram.asakv2.ui.main.MainActivity
 import com.unram.asakv2.viewmodel.AuthViewModel
 
-/**
- * LoginActivity — Halaman login pengguna.
- * Menggunakan Google Sign-In untuk autentikasi Firebase.
- * [RIDHO]
- */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -35,11 +30,10 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 account?.idToken?.let { idToken ->
-                    // Set loading state
+                    
                     binding.progressBar.visibility = View.VISIBLE
                     binding.btnGoogleSignIn.visibility = View.INVISIBLE
                     
-                    // Lakukan Firebase authentication di ViewModel
                     authViewModel.firebaseAuthWithGoogle(idToken)
                 } ?: run {
                     Toast.makeText(this, "Google Sign-In failed: No ID Token", Toast.LENGTH_SHORT).show()

@@ -35,13 +35,10 @@ class AchievementInfoDialog : DialogFragment() {
         view.findViewById<TextView>(R.id.tvDialogTitle).text = arguments?.getString("title")
         view.findViewById<TextView>(R.id.tvDialogMessage).text = arguments?.getString("message")
 
-        // Tombol X pojok kanan atas
         view.findViewById<ImageButton>(R.id.btnDialogClose).setOnClickListener { dismiss() }
 
-        // Tombol Tutup di bawah
         view.findViewById<Button>(R.id.btnInfoClose).setOnClickListener { dismiss() }
 
-        // Icon lock/unlock
         val isLocked = arguments?.getBoolean("isLocked") ?: true
         view.findViewById<ImageView>(R.id.ivDialogIcon).setImageResource(
             if (isLocked) android.R.drawable.ic_lock_lock

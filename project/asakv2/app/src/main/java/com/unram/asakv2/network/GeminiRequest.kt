@@ -1,9 +1,5 @@
 package com.unram.asakv2.network
 
-/**
- * GeminiRequest — Data class request body untuk Gemini API.
- * [RENDI]
- */
 data class GeminiRequest(
     val contents: List<GeminiContent>
 )

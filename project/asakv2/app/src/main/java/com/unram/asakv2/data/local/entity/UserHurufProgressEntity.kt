@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "user_huruf_progress")
 data class UserHurufProgressEntity(
     @PrimaryKey
-    val id: String, // format: {user_id}_{huruf_id}
+    val id: String, 
     val userId: String,
     val hurufId: String,
     val srsLevel: Int = 0,

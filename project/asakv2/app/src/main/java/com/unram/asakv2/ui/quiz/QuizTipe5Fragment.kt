@@ -28,11 +28,9 @@ class QuizTipe5Fragment : Fragment() {
     private var slot2Value: String? = null
     private var attemptCount = 0
 
-    // Ghost (duplikat visual) yang sedang nempel di tiap slot, kalau ada
     private var slot1Ghost: Button? = null
     private var slot2Ghost: Button? = null
 
-    // Map: tombol asli (placeholder) -> ghost yang lagi aktif buat tombol itu (kalau sedang di-drag/nempel)
     private val activeGhosts = HashMap<Button, Button>()
 
     private var dragDownRawX = 0f
@@ -114,7 +112,6 @@ class QuizTipe5Fragment : Fragment() {
         return (listOf(huruf1, huruf2) + distractors).shuffled()
     }
 
-    /** Bikin duplikat visual dari tombol asli, ditaruh di overlay, posisi awal pas nutupin tombol aslinya */
     private fun createGhost(original: Button): Button {
         val ghost = Button(requireContext())
         ghost.text = original.text
@@ -146,7 +143,6 @@ class QuizTipe5Fragment : Fragment() {
                 MotionEvent.ACTION_DOWN -> {
                     if (!original.isEnabled) return@setOnTouchListener false
 
-                    // Kalau tombol ini lagi nempel di slot (sudah ada ghost-nya), pakai ghost yang sama buat ditarik lagi
                     val ghost = activeGhosts[original] ?: createGhost(original).also {
                         activeGhosts[original] = it
                         original.visibility = View.INVISIBLE
@@ -176,7 +172,7 @@ class QuizTipe5Fragment : Fragment() {
                             snapGhostOntoSlot(ghost, original, targetSlot)
                         }
                         targetSlot != null && !isSlotFree(targetSlot) && targetSlot != occupiedSlot -> {
-                            // Slot target sudah terisi orang lain → balik ke slot asal kalau ada, atau balik ke bawah
+                            
                             if (occupiedSlot != null) {
                                 snapGhostOntoSlot(ghost, original, occupiedSlot)
                             } else {
@@ -184,12 +180,12 @@ class QuizTipe5Fragment : Fragment() {
                             }
                         }
                         occupiedSlot != null -> {
-                            // Ditarik keluar dari slot → balik ke tombol bawah
+                            
                             freeSlot(occupiedSlot)
                             removeGhost(original, ghost)
                         }
                         else -> {
-                            // Belum pernah di slot, dilepas ngambang → balik ke posisi asal
+                            
                             removeGhost(original, ghost)
                         }
                     }
@@ -245,7 +241,6 @@ class QuizTipe5Fragment : Fragment() {
             freeSlot(previousSlot)
         }
 
-        // Pakai post supaya layout sudah settled
         ghost.post {
             val overlayLoc = IntArray(2)
             binding.dragOverlay.getLocationOnScreen(overlayLoc)
@@ -253,16 +248,13 @@ class QuizTipe5Fragment : Fragment() {
             val slotLoc = IntArray(2)
             targetSlot.getLocationOnScreen(slotLoc)
 
-            // Center slot dalam koordinat overlay
             val slotCenterX = slotLoc[0] - overlayLoc[0] + targetSlot.width / 2f
             val slotCenterY = slotLoc[1] - overlayLoc[1] + targetSlot.height / 2f
 
-            // Center ghost dalam koordinat overlay (posisi rest = layoutParams margin)
             val params = ghost.layoutParams as FrameLayout.LayoutParams
             val ghostCenterX = params.leftMargin + ghost.width / 2f
             val ghostCenterY = params.topMargin + ghost.height / 2f
 
-            // TranslationX/Y = selisih center
             ghost.animate()
                 .translationX(slotCenterX - ghostCenterX)
                 .translationY(slotCenterY - ghostCenterY)
@@ -379,7 +371,7 @@ class QuizTipe5Fragment : Fragment() {
                 }
                 MotionEvent.ACTION_UP -> {
                     ghost.animate().scaleX(1f).scaleY(1f).setDuration(80).start()
-                    // Hapus listener ghost supaya tidak double
+                    
                     ghost.setOnTouchListener(null)
 
                     val occupiedSlot = currentSlotOf(ghost)
@@ -390,12 +382,12 @@ class QuizTipe5Fragment : Fragment() {
                             snapGhostOntoSlot(ghost, original, targetSlot)
                         }
                         targetSlot != null && !isSlotFree(targetSlot) && targetSlot != occupiedSlot -> {
-                            // Slot terisi orang lain → balik ke slot asal
+                            
                             if (occupiedSlot != null) snapGhostOntoSlot(ghost, original, occupiedSlot)
                             else { freeSlot(occupiedSlot!!); removeGhost(original, ghost) }
                         }
                         occupiedSlot != null -> {
-                            // Dilepas di luar slot → balik ke tombol bawah
+                            
                             freeSlot(occupiedSlot)
                             removeGhost(original, ghost)
                         }

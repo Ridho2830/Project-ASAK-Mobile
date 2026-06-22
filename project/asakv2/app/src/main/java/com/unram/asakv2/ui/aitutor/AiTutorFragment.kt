@@ -9,11 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.unram.asakv2.R
 import com.unram.asakv2.viewmodel.AiTutorViewModel
 
-/**
- * AiTutorFragment — Chat bubble UI + chip suggestion.
- * Menampilkan antarmuka chat dengan AI Tutor menggunakan Gemini API.
- * [RENDI]
- */
 class AiTutorFragment : Fragment() {
 
     private lateinit var aiTutorViewModel: AiTutorViewModel
@@ -31,9 +26,5 @@ class AiTutorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         aiTutorViewModel = ViewModelProvider(this)[AiTutorViewModel::class.java]
 
-        // TODO: Setup RecyclerView dengan ChatAdapter
-        // TODO: Setup input field dan tombol kirim
-        // TODO: Setup chip suggestion
-        // TODO: Observe chat messages dari ViewModel
     }
 }

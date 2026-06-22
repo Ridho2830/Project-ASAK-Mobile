@@ -61,7 +61,7 @@ class QuizTipeArFragment : Fragment() {
         }
 
         btnNext.setOnClickListener {
-            // Selesaikan sub-stage AR dengan benar (gained 0 EXP, correct)
+            
             (parentFragment as? QuizContainerFragment)?.onQuizFragmentResult(0, true)
         }
 
@@ -135,7 +135,6 @@ class QuizTipeArFragment : Fragment() {
             llLettersChecklist.addView(row)
         }
 
-        // Aktifkan tombol Lanjut jika semua huruf stage sudah di-scan
         btnNext.isEnabled = allScanned
         if (allScanned) {
             btnNext.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))

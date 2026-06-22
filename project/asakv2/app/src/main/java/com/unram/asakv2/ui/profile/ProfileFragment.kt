@@ -25,11 +25,6 @@ import com.unram.asakv2.viewmodel.AuthViewModel
 import com.unram.asakv2.viewmodel.ProfileViewModel
 import com.unram.asakv2.viewmodel.AchievementViewModel
 
-/**
- * ProfileFragment — Profil pengguna: ubah nama, select & display achievements, logout.
- * Menampilkan informasi profil pengguna dan opsi pengaturan akun.
- * [RIDHO]
- */
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -38,7 +33,6 @@ class ProfileFragment : Fragment() {
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var authViewModel: AuthViewModel
     private lateinit var achievementViewModel: AchievementViewModel
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +50,6 @@ class ProfileFragment : Fragment() {
         authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         achievementViewModel = ViewModelProvider(this)[AchievementViewModel::class.java]
 
-
         setupObservers()
         setupClickListeners()
 
@@ -66,29 +59,24 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
-
     private fun setupObservers() {
         profileViewModel.user.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.tvUserName.text = user.name
                 binding.tvUserEmail.text = user.email
 
-                // Badge utama di bawah nama
                 binding.tvUserBadge.text = if (user.selectedAchievement.isNotEmpty()) {
                     user.selectedAchievement
                 } else {
                     "Belum Ada"
                 }
 
-                // Tagline di bawah badge
                 binding.tvUserTagline.text = if (user.tagline.isNotEmpty()) {
                     user.tagline
                 } else {
                     "Belum Ada Tagline"
                 }
 
-                // Kalkulasi Level progress untuk Golden Card
                 val currentLevelXp = XpCalculator.xpRequiredForLevel(user.level)
                 val nextLevelXp = XpCalculator.xpRequiredForLevel(user.level + 1)
                 val xpInCurrentLevel = (user.xp - currentLevelXp).coerceAtLeast(0)
@@ -98,11 +86,9 @@ class ProfileFragment : Fragment() {
                 binding.pbLevel.progress = xpInCurrentLevel
                 binding.tvLevelProgressText.text = "Lv. ${user.level} ($xpInCurrentLevel / $xpNeeded)"
 
-                // Stage & Step Progress dinamis
                 binding.tvStage.text = "Stage ${user.currentStage}"
                 binding.tvStep.text = "step ${user.currentBagian}"
 
-                // Fallback stats if Ktor statistics are null
                 if (profileViewModel.statistics.value == null) {
                     val totalSessions = user.completedStages.size
                     val allAccuracies = user.writingAccuracyHistory + user.speakingAccuracyHistory
@@ -112,7 +98,6 @@ class ProfileFragment : Fragment() {
                     binding.tvStreak.text = user.maxStreak.toString()
                 }
 
-                // Load photo url
                 if (user.photoUrl.isNotEmpty()) {
                     Glide.with(this)
                         .load(user.photoUrl)
@@ -120,9 +105,6 @@ class ProfileFragment : Fragment() {
                         .into(binding.ivAvatar)
                 }
 
-
-
-                // Trigger load achievements dan set paku pilihan terpilih
                 achievementViewModel.loadAchievements(user.uid, user.selectedAchievements)
             }
         }
@@ -149,15 +131,13 @@ class ProfileFragment : Fragment() {
                         badgeViews[i].imageTintList = null
                     }
                 } else {
-                    // Tampilkan placeholder slot kosong dengan opacity rendah
+                    
                     badgeViews[i].visibility = View.VISIBLE
                     badgeViews[i].setImageResource(R.drawable.ic_achievement)
                     badgeViews[i].imageTintList = ColorStateList.valueOf(Color.parseColor("#40FFFFFF"))
                 }
             }
         }
-
-
 
         profileViewModel.statistics.observe(viewLifecycleOwner) { stats ->
             if (stats != null) {
@@ -236,7 +216,7 @@ class ProfileFragment : Fragment() {
                 val achId = unlockedAchievements[which].achievementId
                 if (isChecked) {
                     if (selectedTempIds.size >= 4) {
-                        // Limit reached, prevent checked state
+                        
                         Toast.makeText(context, "Maksimal 4 achievement terpilih", Toast.LENGTH_SHORT).show()
                         checkedItems[which] = false
                         (dialog as AlertDialog).listView.setItemChecked(which, false)

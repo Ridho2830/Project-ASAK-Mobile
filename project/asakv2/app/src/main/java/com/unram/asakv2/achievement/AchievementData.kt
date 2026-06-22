@@ -12,10 +12,10 @@ data class AchievementDef(
 object AchievementData {
 
     val all: List<AchievementDef> = listOf(
-        // === 20 Achievement budaya & wisata ===
+        
         AchievementDef("newbie",                 "Newbie",          1,  listOf("tenun"),         "Logo_Achievement/Tenun.png",               "Logo_Achiev_abu/Tenun.png"),
         AchievementDef("ubah_nama",              "Siapa Aku?",      1,  listOf("gerabah"),       "Logo_Achievement/Gerabah.png",             "Logo_Achiev_abu/Gerabah.png"),
-        AchievementDef("ubah_tagline",           "Tagline Keren",   1,  listOf("gula_gending"),  "Logo_Achievement/Gula Gending.png",        "Logo_Achiev_abu/Gula Gending.png"),
+        AchievementDef("ubah_tagline",           "Tagline Keren",   1,  listOf("presean"),       "Logo_Achievement/Begasingan.png",          "Logo_Achiev_abu/Begasingan.png"),
         AchievementDef("ubah_foto",              "Wajah Baru",      1,  listOf("bisoq_meniq"),   "Logo_Achievement/Misoq Meniq.png",         "Logo_Achiev_abu/Misoq Meniq.png"),
         AchievementDef("ubah_achievement",       "Pamer Badge",     1,  listOf("menutu"),        "Logo_Achievement/Menutu.png",              "Logo_Achiev_abu/Menutu.png"),
         AchievementDef("penggunaan_ar",          "Arsitek Virtual", 1,  listOf("begasingan"),    "Logo_Achievement/Begasingan.png",          "Logo_Achiev_abu/Begasingan.png"),
@@ -34,32 +34,30 @@ object AchievementData {
         AchievementDef("streak_5",               "Tekun",           5,  listOf("masjid_bayan"),   "Logo_Achievement/Masjid Kuno Bayan.png",   "Logo_Achiev_abu/Masjid Kuno Bayan.png"),
         AchievementDef("unlock_24_achievement",  "Pemburu Badge",   24, listOf("makam"),         "Logo_Achievement/Makam Selaparang.png",    "Logo_Achiev_abu/Makam Selaparang.png"),
 
-        // === 5 Achievement aksara huruf (unlock via selesai bagian 3 tiap stage) ===
-        // Stage 1 → Ha Na Ca Ra (4 AR)
         AchievementDef(
             "acv21", "Belajar Ha-Na-Ca-Ra", 1,
             listOf("ar_aksara_ha", "ar_aksara_na", "ar_aksara_ca", "ar_aksara_ra"),
             "Logo_Stage/stage1.png", "Logo_Achiev_abu/stage1.png"
         ),
-        // Stage 2 → Ka Da Ta Sa (4 AR)
+        
         AchievementDef(
             "acv22", "Belajar Ka-Da-Ta-Sa", 1,
             listOf("ar_aksara_ka", "ar_aksara_da", "ar_aksara_ta", "ar_aksara_sa"),
             "Logo_Stage/stage2.png", "Logo_Achiev_abu/stage2.png"
         ),
-        // Stage 3 → Wa La Ma Ga (4 AR)
+        
         AchievementDef(
             "acv23", "Belajar Wa-La-Ma-Ga", 1,
             listOf("ar_aksara_wa", "ar_aksara_la", "ar_aksara_ma", "ar_aksara_ga"),
             "Logo_Stage/stage3.png", "Logo_Achiev_abu/stage3.png"
         ),
-        // Stage 4 → Ba Nga Pa (3 AR)
+        
         AchievementDef(
             "acv24", "Belajar Ba-Nga-Pa", 1,
             listOf("ar_aksara_ba", "ar_aksara_nga", "ar_aksara_pa"),
             "Logo_Stage/stage4.png", "Logo_Achiev_abu/stage4.png"
         ),
-        // Stage 5 → Ja Ya Nya (3 AR)
+        
         AchievementDef(
             "acv25", "Belajar Ja-Ya-Nya", 1,
             listOf("ar_aksara_ja", "ar_aksara_ya", "ar_aksara_nya"),
@@ -69,10 +67,6 @@ object AchievementData {
 
     fun getById(id: String) = all.find { it.id == id }
 
-    /**
-     * Mapping: stageId → achievementId huruf aksara.
-     * Dipakai oleh QuizResultFragment untuk trigger unlock otomatis.
-     */
     val stageToAksaraAchievement: Map<Int, String> = mapOf(
         1 to "acv21",
         2 to "acv22",

@@ -18,7 +18,6 @@ class CanvasView @JvmOverloads constructor(
 
     var onStrokeEndListener: OnStrokeEndListener? = null
 
-    // Mode: false = pensil (tulis), true = penghapus (eraser)
     var isEraserMode: Boolean = false
         set(value) {
             field = value
@@ -81,7 +80,7 @@ class CanvasView @JvmOverloads constructor(
                 canvasBitmap?.drawPath(path, paint)
                 path.reset()
                 invalidate()
-                // Trigger submit ke AI setiap angkat (baik pensil maupun penghapus)
+                
                 bitmap?.let { bmp ->
                     onStrokeEndListener?.onStrokeEnd(
                         bmp.copy(bmp.config ?: Bitmap.Config.ARGB_8888, false)

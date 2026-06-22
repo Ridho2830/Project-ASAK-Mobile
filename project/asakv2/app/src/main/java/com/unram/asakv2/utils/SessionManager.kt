@@ -7,12 +7,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-/**
- * SessionManager — Simpan user session lokal (DataStore).
- * Mengelola penyimpanan session pengguna menggunakan Jetpack DataStore Preferences.
- * [RIDHO]
- */
-
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_session")
 
 class SessionManager(private val context: Context) {

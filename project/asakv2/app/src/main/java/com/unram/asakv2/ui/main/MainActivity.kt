@@ -12,10 +12,6 @@ import com.unram.asakv2.achievement.AchievementUnlockManager
 import com.unram.asakv2.achievement.AchievementViewModel
 import com.unram.asakv2.ui.achievement.AchievementUnlockDialog
 
-/**
- * MainActivity — Host bottom navigation + fragment container.
- * Menggunakan Navigation Component untuk navigasi antar fragment.
- */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
@@ -25,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Setup NavHostFragment dan BottomNavigationView dengan ID yang benar
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.navController
@@ -33,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.setupWithNavController(navController)
         
-        // Menampilkan logo ASAK dengan warna asli (tanpa tint)
         bottomNav.menu.findItem(R.id.arFragment)?.let { arItem ->
             arItem.icon?.let { icon ->
                 val wrapDrawable = androidx.core.graphics.drawable.DrawableCompat.wrap(icon).mutate()
@@ -42,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         
-        // Membesarkan icon AR secara langsung di dalam Bottom Navigation
         bottomNav.post {
             val arMenuItem = bottomNav.findViewById<android.view.View>(R.id.arFragment)
             if (arMenuItem != null) {
@@ -51,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Observer unlock dialog dari rekan
         AchievementUnlockManager.pendingUnlock.observe(this) { id ->
             if (id == null || AchievementUnlockManager.isInQuiz) return@observe
             val currentFragment = navHostFragment.childFragmentManager.primaryNavigationFragment
@@ -61,7 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Dot merah achievement
         achievementVm.hasUnclaimed.observe(this) { has ->
             setAchievementDot(has)
         }
@@ -73,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         badge.isVisible = show
         if (show) {
             badge.backgroundColor = android.graphics.Color.RED
-            badge.clearNumber()   // dot saja, tanpa angka
+            badge.clearNumber()   
         }
     }
 }

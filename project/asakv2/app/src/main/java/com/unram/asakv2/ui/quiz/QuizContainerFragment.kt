@@ -51,11 +51,6 @@ class QuizContainerFragment : Fragment() {
         binding.btnClose.setOnClickListener { showExitConfirmation() }
     }
 
-    /**
-     * Membuat daftar plan untuk mode belajar (dari halaman Belajar/StudyFragment).
-     * Tipe 2 (Dengarkan) → expFull=0, isStreakMode=false
-     * Tipe 3 (Menulis)   → expFull=0, isStreakMode=false
-     */
     private fun buildStudyPlans(): List<QuizPlan> {
         val hurufId   = arguments?.getString("studyHuruf") ?: "ha"
         val studyMode = arguments?.getString("studyMode")  ?: "DENGAR"
@@ -82,7 +77,7 @@ class QuizContainerFragment : Fragment() {
         viewModel.isFinished.observe(viewLifecycleOwner) { finished ->
             if (finished) {
                 if (fromStudy) {
-                    // Mode belajar: tidak ada result screen, langsung kembali
+                    
                     findNavController().navigateUp()
                     return@observe
                 }

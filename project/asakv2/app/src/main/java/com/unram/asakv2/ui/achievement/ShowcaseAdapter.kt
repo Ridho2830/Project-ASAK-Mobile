@@ -49,7 +49,6 @@ class ShowcaseAdapter(
         val id  = slots.getOrNull(position)
         val def = id?.let { AchievementData.getById(it) }
 
-        // Border highlight slot yang dipilih
         if (selectedSlot == position && def == null) {
             holder.card.setCardBackgroundColor(Color.parseColor("#FFF3E0"))
             holder.container.setBackgroundResource(R.drawable.bg_slot_selected)
@@ -74,7 +73,6 @@ class ShowcaseAdapter(
             val unlocked = repo.isUnlocked(def.id)
             val claimed  = repo.isClaimed(def.id)
 
-            // Load gambar dari assets (inline, tanpa AssetImageLoader)
             val assetPath = if (unlocked) def.assetColorPath else def.assetGrayPath
             try {
                 val inputStream = ctx.assets.open(assetPath)

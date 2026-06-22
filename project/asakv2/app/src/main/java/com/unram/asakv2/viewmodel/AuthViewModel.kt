@@ -10,11 +10,6 @@ import com.unram.asakv2.repository.AuthRepository
 import com.unram.asakv2.utils.SessionManager
 import kotlinx.coroutines.launch
 
-/**
- * AuthViewModel — Login, logout (Firebase Auth via Google).
- * Mengelola state autentikasi pengguna.
- * [RIDHO]
- */
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     private val authRepository = AuthRepository()

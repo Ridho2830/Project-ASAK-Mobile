@@ -42,7 +42,6 @@ class AchievementGridAdapter(
         val claimed  = repo.isClaimed(def.id)
         val exp      = repo.getExp(def.id)
 
-        // Load gambar dari assets (inline, tanpa AssetImageLoader)
         val assetPath = if (unlocked) def.assetColorPath else def.assetGrayPath
         try {
             val inputStream = ctx.assets.open(assetPath)

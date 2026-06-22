@@ -8,15 +8,11 @@ import com.unram.asakv2.model.User
 import com.unram.asakv2.model.UserAchievement
 import com.unram.asakv2.utils.XpCalculator
 
-/**
- * AchievementRepository — Load, update, & trigger achievement user di Firestore.
- */
 class AchievementRepository {
 
     companion object {
         private const val TAG = "AchievementRepo"
 
-        // Definisi statis 25 template achievement
         val TEMPLATE_ACHIEVEMENTS = listOf(
             Achievement("newbie", "Newbie", "Daftar pertama kali di ASAK", "", "general", 1, "daftar"),
             Achievement("ubah_nama", "Siapa Aku?", "Mengubah nama profil pertama kali", "", "profile", 1, "ubah_nama"),
@@ -39,7 +35,6 @@ class AchievementRepository {
             Achievement("streak_5", "Tekun", "Mencapai streak belajar 5 hari berturut-turut", "", "streak", 5, "streak_5"),
             Achievement("unlock_24_achievement", "Pemburu Badge", "Membuka 24 achievement lainnya", "", "milestone", 24, "unlock_24_achievement"),
             
-            // Stage achievements (5 achievement terakhir)
             Achievement("acv21", "Belajar Ha-Na-Ca-Ra", "Menyelesaikan Stage 1", "", "stage", 1, "stage_1"),
             Achievement("acv22", "Belajar Ka-Da-Ta-Sa", "Menyelesaikan Stage 2", "", "stage", 2, "stage_2"),
             Achievement("acv23", "Belajar Wa-La-Ma-Ga", "Menyelesaikan Stage 3", "", "stage", 3, "stage_3"),
@@ -48,9 +43,6 @@ class AchievementRepository {
         )
     }
 
-    /**
-     * Memastikan database Firestore memiliki semua 25 template achievement.
-     */
     fun seedAchievementsIfEmpty() {
         FirestoreHelper.achievementsCollection().get()
             .addOnSuccessListener { snapshot ->
@@ -90,14 +82,14 @@ class AchievementRepository {
             .addOnSuccessListener { snapshot ->
                 val list = snapshot.toObjects(Achievement::class.java)
                 if (list.isEmpty()) {
-                    // Fallback to local template if Firestore is currently empty
+                    
                     callback(Result.success(TEMPLATE_ACHIEVEMENTS))
                 } else {
                     callback(Result.success(list))
                 }
             }
             .addOnFailureListener { e ->
-                // Fallback to local templates
+                
                 callback(Result.success(TEMPLATE_ACHIEVEMENTS))
             }
     }
@@ -221,12 +213,12 @@ class AchievementRepository {
     }
 
     fun updateSelectedAchievements(userId: String, selectedIds: List<String>, callback: (Result<Boolean>) -> Unit) {
-        // Trigger event "ubah_achievement" when they save pinned achievements
+        
         checkAndTriggerAchievements(userId, "ubah_achievement", customUpdate = { user ->
             user.copy(selectedAchievements = selectedIds)
         }) { result ->
             if (result.isSuccess) {
-                // Update selected badge title based on first pinned item name or "Pelajar"
+                
                 val selectedTitle = if (selectedIds.isNotEmpty()) {
                     val firstId = selectedIds.first()
                     TEMPLATE_ACHIEVEMENTS.find { it.id == firstId }?.title ?: "Pelajar"
@@ -244,10 +236,6 @@ class AchievementRepository {
         }
     }
 
-    /**
-     * Mesin evaluasi pusat untuk update profil, penambahan EXP,
-     * evaluasi kriteria pencapaian (achievements), kalkulasi level-up, dan penyimpanan Firestore.
-     */
     fun checkAndTriggerAchievements(
         userId: String,
         eventName: String? = null,
@@ -259,10 +247,8 @@ class AchievementRepository {
             .addOnSuccessListener { doc ->
                 val rawUser = doc.toObject(User::class.java) ?: User(uid = userId)
                 
-                // 1. Jalankan update spesifik (data, stats, dll.)
                 var user = customUpdate(rawUser)
 
-                // 2. Evaluasi pemicu/kejadian one-time EXP
                 val earnedOneTime = user.earnedOneTimeXpEvents.toMutableList()
                 var addedXp = 0
                 if (eventName != null && XpCalculator.ONE_TIME_XP.containsKey(eventName)) {
@@ -278,7 +264,6 @@ class AchievementRepository {
                     earnedOneTimeXpEvents = earnedOneTime
                 )
 
-                // 3. Evaluasi list 25 achievements berdasarkan status user saat ini
                 val unlockedList = user.unlockedAchievements.toMutableList()
                 
                 fun checkUnlock(id: String) {
@@ -286,7 +271,6 @@ class AchievementRepository {
                         unlockedList.add(id)
                         Log.d(TAG, "Achievement unlocked: $id")
                         
-                        // Save progress detail in achievements sub-collection
                         val achRef = FirestoreHelper.userAchievementsCollection(userId).document(id)
                         achRef.set(
                             mapOf(
@@ -299,12 +283,10 @@ class AchievementRepository {
                             SetOptions.merge()
                         )
                         
-                        // Enqueue to show congratulations dialog
                         com.unram.asakv2.achievement.AchievementUnlockManager.enqueue(id)
                     }
                 }
 
-                // Event-based triggers
                 if (eventName == "daftar") checkUnlock("newbie")
                 if (eventName == "ubah_nama" || unlockedList.contains("ubah_nama")) checkUnlock("ubah_nama")
                 if (eventName == "ubah_tagline" || unlockedList.contains("ubah_tagline")) checkUnlock("ubah_tagline")
@@ -313,7 +295,6 @@ class AchievementRepository {
                 if (eventName == "penggunaan_ar" || unlockedList.contains("penggunaan_ar")) checkUnlock("penggunaan_ar")
                 if (eventName == "belajar" || unlockedList.contains("belajar_pertama")) checkUnlock("belajar_pertama")
 
-                // Stage completion triggers
                 if (user.completedStages.contains(1)) checkUnlock("acv21")
                 if (user.completedStages.contains(2)) checkUnlock("acv22")
                 if (user.completedStages.contains(3)) checkUnlock("acv23")
@@ -321,33 +302,26 @@ class AchievementRepository {
                 if (user.completedStages.contains(5)) checkUnlock("acv25")
                 if (user.completedStages.contains(6)) checkUnlock("selesai_stage_6")
 
-                // Level-based triggers
                 if (user.level >= 2) checkUnlock("naik_level_2")
                 if (user.level >= 5) checkUnlock("mencapai_level_5")
                 if (user.level >= 10) checkUnlock("mencapai_level_10")
                 if (user.level >= 15) checkUnlock("mencapai_level_15")
                 if (user.level >= 20) checkUnlock("level_max")
 
-                // Streak trigger
                 if (user.streak >= 5) checkUnlock("streak_5")
 
-                // Unlocked item count triggers
                 if (user.unlockedLetters.size >= 18) checkUnlock("buka_semua_huruf")
                 if (user.unlockedWisata.size >= 8) checkUnlock("buka_semua_wisata")
                 if (user.unlockedBudaya.size >= 12) checkUnlock("buka_semua_budaya")
 
-                // Accuracy triggers
                 if (user.writingAccuracyHistory.any { it >= 90.0 }) checkUnlock("akurasi_menulis_90")
                 if (user.speakingAccuracyHistory.any { it >= 90.0 }) checkUnlock("akurasi_mengucapkan_90")
 
-                // Check "unlock_24_achievement" (24 other achievements)
                 val otherUnlockedCount = unlockedList.filter { it != "unlock_24_achievement" }.size
                 if (otherUnlockedCount >= 24) checkUnlock("unlock_24_achievement")
 
-                // Apply new achievements list
                 user = user.copy(unlockedAchievements = unlockedList)
 
-                // 4. Hitung milestone reward XP dari total achievement yang terbuka
                 val earnedMilestones = user.earnedMilestoneRewards.toMutableList()
                 var milestoneAddedXp = 0
                 val totalUnlocked = unlockedList.size
@@ -365,14 +339,12 @@ class AchievementRepository {
                     earnedMilestoneRewards = earnedMilestones
                 )
 
-                // 5. Kalkulasi level-up dari cumulative XP
                 var evaluatedLevel = user.level
                 while (evaluatedLevel < 20 && user.xp >= XpCalculator.xpRequiredForLevel(evaluatedLevel + 1)) {
                     evaluatedLevel++
                     Log.d(TAG, "Leveled up! New level: $evaluatedLevel")
                 }
                 
-                // Jika level berubah, kita evaluasi ulang level-based achievements
                 if (evaluatedLevel != user.level) {
                     user = user.copy(level = evaluatedLevel)
                     if (evaluatedLevel >= 2) checkUnlock("naik_level_2")
@@ -381,14 +353,12 @@ class AchievementRepository {
                     if (evaluatedLevel >= 15) checkUnlock("mencapai_level_15")
                     if (evaluatedLevel >= 20) checkUnlock("level_max")
                     
-                    // Re-evaluate unlock_24_achievement in case level-ups unlocked others
                     val secondOtherUnlockedCount = unlockedList.filter { it != "unlock_24_achievement" }.size
                     if (secondOtherUnlockedCount >= 24) checkUnlock("unlock_24_achievement")
                     
                     user = user.copy(unlockedAchievements = unlockedList)
                 }
 
-                // 6. Simpan seluruh data ke Firestore
                 userDocRef.set(user, SetOptions.merge())
                     .addOnSuccessListener {
                         Log.d(TAG, "User document successfully updated in Firestore.")

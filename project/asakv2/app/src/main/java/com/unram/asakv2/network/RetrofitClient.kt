@@ -7,10 +7,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-/**
- * RetrofitClient — Singleton Retrofit + OkHttp builder.
- * Menyediakan instance Retrofit untuk Gemini API, Hugging Face API, dan backend local Ktor.
- */
 object RetrofitClient {
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -51,7 +47,7 @@ object RetrofitClient {
 
     val apiService: com.unram.asakv2.data.remote.ApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("http://192.168.1.13:8080/") // Backend Ktor
+            .baseUrl("http://192.168.1.13:8080/") 
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

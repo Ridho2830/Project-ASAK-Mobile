@@ -44,7 +44,7 @@ class AchievementClaimDialog : DialogFragment() {
         view.findViewById<Button>(R.id.btnClaimAction).setOnClickListener {
             vm.claimReward(id)
             dismiss()
-            // Arahkan langsung ke halaman AR
+            
             findNavController().navigate(R.id.arFragment)
         }
     }

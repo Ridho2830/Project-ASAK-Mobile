@@ -4,11 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-/**
- * HomeViewModel — XP, streak, level progress.
- * Mengelola data beranda pengguna: total XP, streak harian, dan progress level.
- * [KANDA]
- */
 class HomeViewModel : ViewModel() {
 
     private val _totalXp = MutableLiveData<Int>()
@@ -24,6 +19,6 @@ class HomeViewModel : ViewModel() {
     val levelProgress: LiveData<Float> = _levelProgress
 
     fun loadHomeData(userId: String) {
-        // TODO: Load XP, streak, level progress dari Firestore
+        
     }
 }

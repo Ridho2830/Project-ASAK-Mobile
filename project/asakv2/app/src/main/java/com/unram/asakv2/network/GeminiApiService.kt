@@ -5,11 +5,6 @@ import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-/**
- * GeminiApiService — Retrofit interface untuk Gemini REST API.
- * Mendefinisikan endpoint API Gemini untuk fitur AI Tutor.
- * [RENDI]
- */
 interface GeminiApiService {
 
     @POST("v1beta/models/gemini-pro:generateContent")

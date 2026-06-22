@@ -111,7 +111,6 @@ class QuizTipe4Fragment : Fragment() {
 
         audioFile = voiceRecognizer.startRecording()
 
-        // Auto stop after 3 seconds
         var remaining = 3
         countdownTimer = object : CountDownTimer(Constants.VOICE_RECORD_DURATION_MS, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -142,7 +141,7 @@ class QuizTipe4Fragment : Fragment() {
         attemptCount++
 
         if (!isStreakMode) {
-            // Mode bebas: tampilkan akurasi, ndk ada EXP, mic tetap bisa dipencet lagi
+            
             binding.tvStatus.text = if (isAccurate)
                 "Akurasi suara: ${score.toInt()}% — Tepat!"
             else

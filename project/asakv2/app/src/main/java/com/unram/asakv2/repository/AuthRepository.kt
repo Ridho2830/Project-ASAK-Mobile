@@ -4,11 +4,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.unram.asakv2.model.User
 
-/**
- * AuthRepository — Firebase Auth wrapper.
- * Mengelola operasi autentikasi Google Sign-In, logout, cek status login.
- * [RIDHO]
- */
 class AuthRepository {
 
     private val auth = FirebaseAuth.getInstance()

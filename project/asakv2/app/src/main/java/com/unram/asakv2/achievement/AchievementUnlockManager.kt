@@ -5,11 +5,6 @@ import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-/**
- * Singleton yang menampung antrian dialog "selamat unlock achievement".
- * Dipanggil dari mana saja (ViewModel/Fragment) ketika addExp mengembalikan true.
- * Fragment quiz TIDAK boleh observe — cek isInQuiz sebelum dispatch.
- */
 object AchievementUnlockManager {
 
     private val _pendingUnlock = MutableLiveData<String?>()

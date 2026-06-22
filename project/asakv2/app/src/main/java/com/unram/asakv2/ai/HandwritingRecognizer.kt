@@ -22,7 +22,7 @@ class HandwritingRecognizer {
         for (y in 0 until src.height) {
             for (x in 0 until src.width) {
                 val pixel = src.getPixel(x, y)
-                // cari pixel yang bukan putih (tulisan)
+                
                 if (pixel != android.graphics.Color.WHITE) {
                     found = true
                     if (x < minX) minX = x
@@ -41,7 +41,6 @@ class HandwritingRecognizer {
 
         val cropped = Bitmap.createBitmap(src, minX, minY, w, h)
 
-        // Buat canvas putih + gambar tulisannya
         val result = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val canvas = android.graphics.Canvas(result)
         canvas.drawColor(android.graphics.Color.WHITE)
@@ -50,16 +49,9 @@ class HandwritingRecognizer {
     }
     suspend fun recognize(bitmap: Bitmap, huruf: String): Float {
         return try {
-            val croppedBitmap = cropBitmapToContent(bitmap) ?: return 0f  // ← tambah ini
-            val base64 = bitmapToBase64(croppedBitmap)  // ← pakai cropped
+            val croppedBitmap = cropBitmapToContent(bitmap) ?: return 0f  
+            val base64 = bitmapToBase64(croppedBitmap)  
 
-            // PENTING: server (lihat AksaraSasakCollector.py -> HURUF_LIST)
-            // dilatih/divalidasi dengan label berformat "Ha", "Na", "Ca", dst
-            // (huruf besar di awal saja). Project kita menyimpan hurufId
-            // lowercase ("ha","na",...) karena dipakai juga sebagai nama file
-            // asset (aksara/gambar/ha.png). Kalau dikirim mentah lowercase,
-            // server bisa gagal mencocokkan label -> score selalu 0.
-            // Maka kita normalisasi formatnya tepat sebelum dikirim ke API.
             val hurufForApi = normalizeHurufForApi(huruf)
 
             val request = CnnRequest(
@@ -90,11 +82,6 @@ class HandwritingRecognizer {
         }
     }
 
-    /**alu lowerc
-     *      * Server/model dilatih dengan label kapital di awal saja, contoh: "Ha", "Nga", "Nya".
-     *      * hurufId di app selase ("ha", "nga", "nya") karena dipakai sebagai nama file
-     * asset. Fungsi ini mengubah "ha" -> "Ha", "nga" -> "Nga", dst.
-     */
     private fun normalizeHurufForApi(huruf: String): String {
         return huruf.lowercase().replaceFirstChar { it.uppercase() }
     }

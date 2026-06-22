@@ -7,11 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.unram.asakv2.R
 
-/**
- * AchievementDetailFragment — Popup detail achievement.
- * Menampilkan informasi detail achievement dan opsi untuk menampilkannya di profil.
- * [DESTI]
- */
 class AchievementDetailFragment : Fragment() {
 
     override fun onCreateView(
@@ -25,7 +20,5 @@ class AchievementDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: Load detail achievement dari arguments/ViewModel
-        // TODO: Setup tombol pilih tampil di profil
     }
 }

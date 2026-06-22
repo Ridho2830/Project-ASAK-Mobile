@@ -170,7 +170,6 @@ class AchievementRepository(context: Context) {
         }
     }
 
-    // Deprecated claim/setClaimed method without userId for local backward compatibility (should not be used now)
     fun setClaimed(id: String) {
         claimedMap[id] = true
     }
@@ -186,7 +185,7 @@ class AchievementRepository(context: Context) {
     fun setShowcaseSlot(index: Int, id: String?, userId: String, callback: (Result<Boolean>) -> Unit) {
         if (index in 0..3) {
             if (id != null) {
-                // Hapus duplikasi jika achievement yang sama dipasang di slot lain
+                
                 for (i in 0 until 4) {
                     if (i != index && showcaseSlots[i] == id) {
                         showcaseSlots[i] = null

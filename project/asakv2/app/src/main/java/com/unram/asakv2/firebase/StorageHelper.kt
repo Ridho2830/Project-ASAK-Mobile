@@ -2,11 +2,6 @@ package com.unram.asakv2.firebase
 
 import com.google.firebase.storage.FirebaseStorage
 
-/**
- * StorageHelper — Download URL model 3D dari Firebase Storage.
- * Menyediakan method untuk mengambil download URL file dari Firebase Storage.
- * [DESTI]
- */
 object StorageHelper {
 
     private val storage: FirebaseStorage by lazy {

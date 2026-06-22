@@ -1,9 +1,5 @@
 package com.unram.asakv2.network
 
-/**
- * GeminiResponse — Data class response dari Gemini API.
- * [RENDI]
- */
 data class GeminiResponse(
     val candidates: List<GeminiCandidate>?
 )

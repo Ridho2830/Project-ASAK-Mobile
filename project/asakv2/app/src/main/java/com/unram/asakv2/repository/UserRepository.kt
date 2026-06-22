@@ -3,9 +3,6 @@ package com.unram.asakv2.repository
 import com.unram.asakv2.firebase.FirestoreHelper
 import com.unram.asakv2.model.User
 
-/**
- * UserRepository — CRUD user di Firestore + Hook Achievement evaluator.
- */
 class UserRepository {
 
     private val achievementRepository = AchievementRepository()
@@ -14,10 +11,9 @@ class UserRepository {
         val userRef = FirestoreHelper.usersCollection().document(user.uid)
         userRef.get().addOnSuccessListener { document ->
             if (!document.exists()) {
-                // Seed achievements if empty first
+                
                 achievementRepository.seedAchievementsIfEmpty()
 
-                // Trigger "daftar" event for newbie achievement
                 userRef.set(user).addOnSuccessListener {
                     achievementRepository.checkAndTriggerAchievements(user.uid, "daftar") { result ->
                         if (result.isSuccess) {
@@ -30,7 +26,7 @@ class UserRepository {
                     callback(Result.failure(e))
                 }
             } else {
-                // Seed achievements on login just in case
+                
                 achievementRepository.seedAchievementsIfEmpty()
                 callback(Result.success(true))
             }
@@ -117,7 +113,6 @@ class UserRepository {
             val updatedStreak = maxOf(user.streak, streak)
             val updatedMaxStreak = maxOf(user.maxStreak, streak)
 
-            // Hitung XP baru dan update Level
             val updatedXp = user.xp + xpGained
             var newLevel = user.level
             while (newLevel < 21 && updatedXp >= com.unram.asakv2.utils.XpCalculator.xpRequiredForLevel(newLevel + 1)) {
@@ -182,7 +177,6 @@ class UserRepository {
                     earnedMilestoneRewards = emptyList()
                 )
                 
-                // Reset achievements in sub-collection
                 val userAcvRef = FirestoreHelper.userAchievementsCollection(userId)
                 userAcvRef.get().addOnSuccessListener { snapshot ->
                     val batch = FirestoreHelper.db.batch()

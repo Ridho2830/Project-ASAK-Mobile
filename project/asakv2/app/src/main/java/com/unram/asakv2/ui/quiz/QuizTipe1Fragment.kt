@@ -53,7 +53,7 @@ class QuizTipe1Fragment : Fragment() {
     }
 
     private fun setupQuestion() {
-        // Load image aksara from assets
+        
         try {
             val assetManager = requireContext().assets
             val inputStream = assetManager.open("aksara/gambar/$hurufId.png")
@@ -63,7 +63,6 @@ class QuizTipe1Fragment : Fragment() {
             binding.ivAksara.setImageResource(android.R.drawable.ic_menu_gallery)
         }
 
-        // Generate 4 options: 1 correct + 3 random distractors
         val options = generateOptions(hurufId)
 
         val optionButtons = listOf(
@@ -85,7 +84,7 @@ class QuizTipe1Fragment : Fragment() {
         binding.btnNext.isEnabled = false
         binding.btnNext.alpha = 0.5f
         binding.btnNext.setOnClickListener {
-            // Not handled here — parent container handles navigation
+            
         }
     }
 
@@ -98,12 +97,11 @@ class QuizTipe1Fragment : Fragment() {
         answered = true
         val isCorrect = chosen == hurufId
 
-        // Visual feedback
         if (isCorrect) {
             clickedBtn.setBackgroundColor(Color.parseColor("#2ecc71"))
         } else {
             clickedBtn.setBackgroundColor(Color.parseColor("#e74c3c"))
-            // Show correct answer in green
+            
             allBtns.forEach { btn ->
                 if (btn.text.toString().lowercase() ==
                     (Constants.HURUF_DISPLAY[hurufId] ?: hurufId).lowercase()) {

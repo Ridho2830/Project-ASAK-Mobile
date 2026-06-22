@@ -53,7 +53,6 @@ class HomeFragment : Fragment() {
                 pbXp.progress = xpInCurrentLevel
                 tvLevelStatus.text = "Lv. ${user.level} ($xpInCurrentLevel / $xpNeeded)"
 
-                // Re-render progression map dynamically after synchronization
                 if (isAdded) {
                     renderGameProgression(requireView(), user.currentStage, user.currentBagian)
                 }
@@ -66,7 +65,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // Refresh setiap kali kembali ke home (setelah quiz selesai)
+        
         view?.let { refreshUI(it) }
     }
 
@@ -74,7 +73,6 @@ class HomeFragment : Fragment() {
         val currentStage  = ProgressManager.getCurrentStage(requireContext())
         val currentBagian = ProgressManager.getCurrentBagian(requireContext())
 
-        // Load profile to trigger observer update for tvLevelStatus and pbXp
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null) {
             profileViewModel.loadProfile(currentUser.uid)
@@ -84,7 +82,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun calculateTotalCompleted(currentStage: Int, currentBagian: Int): Int {
-        // Hitung berapa total bagian yang sudah selesai berdasarkan posisi aktif
+        
         val bagianPerStage = mapOf(1 to 5, 2 to 5, 3 to 6, 4 to 6, 5 to 6, 6 to 3)
         var total = 0
         for (s in 1 until currentStage) {
@@ -96,21 +94,19 @@ class HomeFragment : Fragment() {
 
     private fun initSubStageStructure() {
         subStageList = listOf(
-            // === STAGE 1 ===
+            
             SubStageProgress(R.id.btn_s1_sub1, 1, 1, "BUKU",   R.color.stage1_start),
             SubStageProgress(R.id.btn_s1_sub2, 1, 2, "BUKU",   R.color.stage1_start),
             SubStageProgress(R.id.btn_s1_sub3, 1, 3, "BUKU",   R.color.stage1_start),
             SubStageProgress(R.id.btn_s1_sub4, 1, 4, "KAMERA", R.color.stage1_start),
             SubStageProgress(R.id.btn_s1_sub5, 1, 5, "PUZZLE", R.color.stage1_start),
 
-            // === STAGE 2 ===
             SubStageProgress(R.id.btn_s2_sub1, 2, 1, "BUKU",   R.color.stage2_start),
             SubStageProgress(R.id.btn_s2_sub2, 2, 2, "BUKU",   R.color.stage2_start),
             SubStageProgress(R.id.btn_s2_sub3, 2, 3, "BUKU",   R.color.stage2_start),
             SubStageProgress(R.id.btn_s2_sub4, 2, 4, "KAMERA", R.color.stage2_start),
             SubStageProgress(R.id.btn_s2_sub5, 2, 5, "PUZZLE", R.color.stage2_start),
 
-            // === STAGE 3 ===
             SubStageProgress(R.id.btn_s3_sub1, 3, 1, "BUKU",   R.color.stage3_start),
             SubStageProgress(R.id.btn_s3_sub2, 3, 2, "BUKU",   R.color.stage3_start),
             SubStageProgress(R.id.btn_s3_sub3, 3, 3, "BUKU",   R.color.stage3_start),
@@ -118,7 +114,6 @@ class HomeFragment : Fragment() {
             SubStageProgress(R.id.btn_s3_sub5, 3, 5, "PUZZLE", R.color.stage3_start),
             SubStageProgress(R.id.btn_s3_sub6, 3, 6, "PUZZLE", R.color.stage3_start),
 
-            // === STAGE 4 ===
             SubStageProgress(R.id.btn_s4_sub1, 4, 1, "BUKU",   R.color.stage4_start),
             SubStageProgress(R.id.btn_s4_sub2, 4, 2, "BUKU",   R.color.stage4_start),
             SubStageProgress(R.id.btn_s4_sub3, 4, 3, "BUKU",   R.color.stage4_start),
@@ -126,7 +121,6 @@ class HomeFragment : Fragment() {
             SubStageProgress(R.id.btn_s4_sub5, 4, 5, "PUZZLE", R.color.stage4_start),
             SubStageProgress(R.id.btn_s4_sub6, 4, 6, "PUZZLE", R.color.stage4_start),
 
-            // === STAGE 5 ===
             SubStageProgress(R.id.btn_s5_sub1, 5, 1, "BUKU",   R.color.stage5_start),
             SubStageProgress(R.id.btn_s5_sub2, 5, 2, "BUKU",   R.color.stage5_start),
             SubStageProgress(R.id.btn_s5_sub3, 5, 3, "BUKU",   R.color.stage5_start),
@@ -134,7 +128,6 @@ class HomeFragment : Fragment() {
             SubStageProgress(R.id.btn_s5_sub5, 5, 5, "PUZZLE", R.color.stage5_start),
             SubStageProgress(R.id.btn_s5_sub6, 5, 6, "PUZZLE", R.color.stage5_start),
 
-            // === STAGE 6 ===
             SubStageProgress(R.id.btn_s6_sub1, 6, 1, "PUZZLE", R.color.stage6_start),
             SubStageProgress(R.id.btn_s6_sub2, 6, 2, "PUZZLE", R.color.stage6_start),
             SubStageProgress(R.id.btn_s6_sub3, 6, 3, "PUZZLE", R.color.stage6_start)

@@ -13,11 +13,6 @@ import com.unram.asakv2.utils.SessionManager
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-/**
- * SplashActivity — Loading screen awal aplikasi ASAK v2.
- * Menampilkan logo dan animasi pembuka sebelum navigasi ke LoginActivity.
- * [RIDHO]
- */
 class SplashActivity : AppCompatActivity() {
 
     companion object {

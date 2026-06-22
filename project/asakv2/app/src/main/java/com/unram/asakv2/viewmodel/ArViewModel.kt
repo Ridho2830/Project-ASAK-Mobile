@@ -5,11 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.unram.asakv2.model.ArBudaya
 
-/**
- * ArViewModel — Scan result, unlock AR, load model 3D.
- * Mengelola state AR: hasil scan barcode, unlock konten, dan loading model 3D.
- * [DESTI]
- */
 class ArViewModel : ViewModel() {
 
     private val _scanResult = MutableLiveData<String?>()
@@ -26,14 +21,14 @@ class ArViewModel : ViewModel() {
 
     fun onBarcodeScanned(barcode: String) {
         _scanResult.value = barcode
-        // TODO: Load AR budaya data berdasarkan barcode dari ArRepository
+        
     }
 
     fun unlockArBudaya(userId: String, arBudayaId: String) {
-        // TODO: Unlock AR budaya dan simpan ke Firestore
+        
     }
 
     fun loadModel3D(modelUrl: String) {
-        // TODO: Load model 3D dari Firebase Storage via ArRepository
+        
     }
 }

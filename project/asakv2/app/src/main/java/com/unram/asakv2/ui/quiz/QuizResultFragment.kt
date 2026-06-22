@@ -56,7 +56,6 @@ class QuizResultFragment : Fragment() {
         else
             "❌ Coba lagi untuk meningkatkan skor"
 
-        // Banner akhir stage
         val totalBagian  = QuizScenario.allStages[stageId]?.size ?: 0
         val isLastBagian = stageId > 0 && bagianId == totalBagian
         binding.layoutStageComplete.visibility =
@@ -70,18 +69,16 @@ class QuizResultFragment : Fragment() {
         var currentStageVal = ProgressManager.getCurrentStage(requireContext())
         var currentBagianVal = ProgressManager.getCurrentBagian(requireContext())
 
-        // Simpan progress jika lulus dan bukan replay
         if (isPassed && stageId > 0 && !isReplay) {
             val nextProgress = ProgressManager.advanceProgress(requireContext(), stageId, bagianId)
             currentStageVal = nextProgress.first
             currentBagianVal = nextProgress.second
         }
 
-        // Simpan hasil belajar, akurasi, streak dan trigger evaluasi achievement di Firestore (jika bukan replay)
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser != null && !isReplay) {
-            val isWriting = (bagianId == 3) // Sub-stage 3 is writing/CNN canvas
-            val isSpeaking = (bagianId == 4) // Sub-stage 4 is speaking/voice recognition
+            val isWriting = (bagianId == 3) 
+            val isSpeaking = (bagianId == 4) 
             val completedStageId = if (isLastBagian && isPassed) stageId else 0
 
             userRepository.updateQuizResult(
@@ -95,7 +92,7 @@ class QuizResultFragment : Fragment() {
                 currentStage = currentStageVal,
                 currentBagian = currentBagianVal
             ) { result ->
-                // Progress updated successfully on Firestore
+                
             }
         }
 

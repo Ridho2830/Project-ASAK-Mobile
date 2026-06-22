@@ -1,8 +1,5 @@
 package com.unram.asakv2.model
 
-/**
- * Data class sesi quiz + answers — Merekam sesi quiz beserta jawaban.
- */
 data class QuizSession(
     val sessionId: String = "",
     val userId: String = "",
@@ -15,12 +12,9 @@ data class QuizSession(
     val answers: List<QuizAnswer> = emptyList()
 )
 
-/**
- * Data class jawaban quiz individual.
- */
 data class QuizAnswer(
     val hurufId: String = "",
-    val quizType: Int = 0,          // Tipe quiz (1-5)
+    val quizType: Int = 0,          
     val userAnswer: String = "",
     val correctAnswer: String = "",
     val isCorrect: Boolean = false,

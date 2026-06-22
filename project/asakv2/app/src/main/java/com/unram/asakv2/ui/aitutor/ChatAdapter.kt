@@ -8,11 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.unram.asakv2.R
 import com.unram.asakv2.model.ChatMessage
 
-/**
- * ChatAdapter — RecyclerView adapter untuk bubble chat AI Tutor.
- * Menampilkan pesan chat dalam bentuk bubble (user vs AI).
- * [RENDI]
- */
 class ChatAdapter(
     private val messages: MutableList<ChatMessage> = mutableListOf()
 ) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
@@ -23,9 +18,9 @@ class ChatAdapter(
     }
 
     inner class ChatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // TODO: Bind views (bubble text, timestamp)
+        
         fun bind(message: ChatMessage) {
-            // TODO: Implementasi bind data ke view
+            
         }
     }
 

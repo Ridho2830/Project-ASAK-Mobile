@@ -10,9 +10,6 @@ import com.unram.asakv2.repository.UserRepository
 import com.unram.asakv2.utils.SessionManager
 import kotlinx.coroutines.launch
 
-/**
- * ProfileViewModel — Load profil, update nama, tagline, dan foto user.
- */
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userRepository = UserRepository()
@@ -75,7 +72,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                     _statistics.postValue(response.body()!!.data)
                 }
             } catch (e: Exception) {
-                // Ignore or handle
+                
             }
         }
     }

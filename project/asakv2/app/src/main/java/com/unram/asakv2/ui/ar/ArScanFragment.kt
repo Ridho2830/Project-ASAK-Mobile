@@ -72,10 +72,8 @@ class ArScanFragment : Fragment() {
 
         arFragment = childFragmentManager.findFragmentById(R.id.arFragment) as ArFragment
         
-        // Sembunyikan panduan instruksi tangan (discovery gesture) agar tidak menutupi layar
         arFragment.instructionsController.isEnabled = false
 
-        // Start loading and downsampling marker images in parallel on Dispatchers.IO immediately
         val appContext = requireContext().applicationContext
         Log.d("AR_SCAN_DEBUG", "Starting parallel marker image loading...")
         bitmapsDeferred = lifecycleScope.async(Dispatchers.IO) {
@@ -93,12 +91,11 @@ class ArScanFragment : Fragment() {
             }.awaitAll().filterNotNull().toMap()
         }
 
-        // 1. Configure the session database synchronously BEFORE the session starts
         arFragment.setOnSessionConfigurationListener { session, config ->
             config.focusMode = Config.FocusMode.AUTO
             Log.d("AR_SCAN_DEBUG", "Session configuration started.")
             try {
-                // Wait for the background parallel decoding to finish.
+                
                 val bitmaps = runBlocking {
                     bitmapsDeferred.await()
                 }
@@ -115,7 +112,6 @@ class ArScanFragment : Fragment() {
             }
         }
 
-        // 2. Set up the update listener safely (handling early inflation)
         val arSceneView = arFragment.arSceneView
         if (arSceneView != null) {
             Log.d("AR_SCAN_DEBUG", "arSceneView is already ready. Setting up listener immediately.")
@@ -144,7 +140,6 @@ class ArScanFragment : Fragment() {
             val session = arSceneView.session ?: return@addOnUpdateListener
             val frame = arSceneView.arFrame ?: return@addOnUpdateListener
             
-            // Mengambil semua AugmentedImage yang terdaftar di session
             val allImages = session.getAllTrackables(AugmentedImage::class.java)
             for (image in allImages) {
                 val code = image.name
@@ -155,7 +150,7 @@ class ArScanFragment : Fragment() {
                     image.trackingMethod == AugmentedImage.TrackingMethod.FULL_TRACKING
                 
                 if (isTracking && anchorNode == null) {
-                    // Marker baru terdeteksi — buat anchor dan model
+                    
                     Log.d("AR_SCAN_DEBUG", "Marker baru terdeteksi: $code (method=${image.trackingMethod})")
                     
                     val assetInfo = ArModelMapper.getAssetInfo(code)
@@ -178,7 +173,6 @@ class ArScanFragment : Fragment() {
                                 val markerWidth = image.extentX
                                 var scale = if (maxDim > 0f) markerWidth / maxDim else 1.0f
 
-                                // Terapkan multiplier agar objek 3D pas di atas marker (Aksara 50%, Budaya 40%)
                                 if (assetInfo.category == ArModelMapper.Category.AKSARA) {
                                     scale *= 0.5f
                                 } else {
@@ -205,7 +199,6 @@ class ArScanFragment : Fragment() {
                         
                         arViewModel.onBarcodeScanned(code)
 
-                        // Simpan hasil scan AR dan trigger evaluasi achievement di Firestore
                         val currentUser = FirebaseAuth.getInstance().currentUser
                         if (currentUser != null) {
                             val achievementRepository = AchievementRepository()
@@ -224,7 +217,7 @@ class ArScanFragment : Fragment() {
                                                 if (!unlockedLet.contains(code)) unlockedLet.add(code)
                                             }
                                             ArModelMapper.Category.BUDAYA -> {
-                                                // Check if it's a wisata item
+                                                
                                                 val isWisata = code == "air_terjun" || code == "pantai_kuta" || 
                                                                code == "sirkuit" || code == "desaSade" || 
                                                                code == "desa_sade" || code == "gn_rinjani" || 
@@ -244,11 +237,11 @@ class ArScanFragment : Fragment() {
                                         unlockedBudaya = unlockedBud
                                     )
                                 }
-                            ) { /* No-op callback */ }
+                            ) {  }
                         }
                     }
                 } else if (anchorNode != null) {
-                    // Objek sudah ada — tampilkan/sembunyikan berdasarkan FULL_TRACKING
+                    
                     if (isFullTracking && !anchorNode.isEnabled) {
                         anchorNode.isEnabled = true
                         Log.d("AR_SCAN_DEBUG", "Tampilkan $code (FULL_TRACKING)")

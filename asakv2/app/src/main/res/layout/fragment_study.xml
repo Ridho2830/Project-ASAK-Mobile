@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app_light"
+    tools:context=".ui.study.StudyFragment">
+
+    <!-- RecyclerView gabungan (huruf + wisata + budaya) -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_katalog_huruf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="76dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layoutManager="GridLayoutManager"
+        tools:spanCount="2"
+        tools:listitem="@layout/item_huruf_grid" />
+
+    <!-- 3 Bubble navigasi di sisi kiri layar -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Bubble 1: Huruf Aksara -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_nav_aksara"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_book"
+            app:fabSize="mini"
+            app:backgroundTint="@color/purple_primary"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+        <!-- Bubble 2: Wisata Lombok -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_nav_wisata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_ar"
+            app:fabSize="mini"
+            app:backgroundTint="#009688"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+        <!-- Bubble 3: Budaya Sasak -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_nav_budaya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_profile"
+            app:fabSize="mini"
+            app:backgroundTint="#E91E63"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

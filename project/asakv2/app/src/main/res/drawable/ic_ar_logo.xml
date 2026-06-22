@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#E8A020"/>
+            <size android:width="48dp" android:height="48dp"/>
+        </shape>
+    </item>
+    <item>
+        <inset android:insetLeft="8dp" android:insetTop="12dp"
+            android:insetRight="8dp" android:insetBottom="12dp">
+            <shape android:shape="rectangle">
+                <!-- Teks AR tidak bisa langsung di drawable XML,
+                     gunakan vector icon bertuliskan AR atau font icon -->
+            </shape>
+        </inset>
+    </item>
+</layer-list>

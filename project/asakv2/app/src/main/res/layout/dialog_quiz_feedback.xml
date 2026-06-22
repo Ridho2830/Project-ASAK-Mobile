@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="20dp"
+        android:paddingBottom="18dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp">
+
+        <TextView
+            android:id="@+id/tvFeedbackIcon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:text="✓"
+            android:textSize="28sp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/bg_feedback_icon_circle"
+            android:layout_marginBottom="14dp"/>
+
+        <TextView
+            android:id="@+id/tvFeedbackTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Benar!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tvFeedbackMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+10 EXP"
+            android:textSize="14sp"
+            android:textColor="#8892a4"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginBottom="14dp"/>
+
+        <Button
+            android:id="@+id/btnFeedbackOk"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:text="OK"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:backgroundTint="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

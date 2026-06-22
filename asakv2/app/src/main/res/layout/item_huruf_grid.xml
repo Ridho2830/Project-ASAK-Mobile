@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_huruf_grid"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/iv_grid_aksara"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/ic_book"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@id/iv_grid_aksara"
+            android:layout_toStartOf="@+id/btn_grid_menu"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tv_grid_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Ha"
+                android:textColor="@color/purple_primary"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/tv_grid_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="[ha]"
+                android:textColor="@color/gray_dark"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_grid_menu"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_quiz"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            tools:ignore="ContentDescription" />
+
+        <!-- Gembok — pakai ic_unlock_status (bukan ic_profile) -->
+        <ImageView
+            android:id="@+id/iv_grid_lock"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_unlock_status"
+            app:tint="@color/gray_dark"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:visibility="gone"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

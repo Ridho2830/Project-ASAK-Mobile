@@ -50,7 +50,7 @@ return [
              *
              */
 
-            'credentials' => env('FIREBASE_CREDENTIALS', env('GOOGLE_APPLICATION_CREDENTIALS')),
+            'credentials' => storage_path('app/firebase/asakmobile-5c462-firebase-adminsdk-fbsvc-ff1465296e.json'),
 
             /*
              * ------------------------------------------------------------------------

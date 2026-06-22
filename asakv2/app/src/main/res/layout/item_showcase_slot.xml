@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/flShowcaseContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardShowcase"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#2a2a3e"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="8dp">
+
+            <ImageView
+                android:id="@+id/ivShowcaseImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/tvShowcaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#eaeaea"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:maxLines="1"
+                android:ellipsize="end"/>
+
+            <ProgressBar
+                android:id="@+id/pbShowcase"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:layout_marginTop="4dp"/>
+
+        </LinearLayout>
+
+        <!-- Plus button slot kosong -->
+        <TextView
+            android:id="@+id/tvShowcasePlus"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="+"
+            android:textSize="36sp"
+            android:textColor="#E8A020"
+            android:gravity="center"/>
+
+        <!-- Minus button mode edit pojok kanan atas -->
+        <TextView
+            android:id="@+id/tvShowcaseMinus"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="4dp"
+            android:text="−"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="@drawable/bg_minus_badge"
+            android:visibility="gone"/>
+
+        <!-- Gift icon pojok kanan atas -->
+        <ImageView
+            android:id="@+id/ivShowcaseGift"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="top|end"
+            android:layout_margin="4dp"
+            android:src="@android:drawable/ic_menu_send"
+            android:visibility="gone"/>
+
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>

@@ -27,15 +27,6 @@ object RetrofitClient {
         .writeTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    val geminiApiService: GeminiApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl(Constants.GEMINI_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(GeminiApiService::class.java)
-    }
-
     val huggingFaceApiService: HuggingFaceApiService by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.HUGGING_FACE_BASE_URL)
@@ -47,7 +38,7 @@ object RetrofitClient {
 
     val apiService: com.unram.asakv2.data.remote.ApiService by lazy {
         Retrofit.Builder()
-            .baseUrl("http://192.168.1.13:8080/") 
+            .baseUrl("http://10.111.48.135:8080/") 
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

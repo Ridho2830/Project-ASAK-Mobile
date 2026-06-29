@@ -123,7 +123,12 @@ class StudyFragment : Fragment() {
                         findNavController().navigate(R.id.action_study_to_quizContainer, bundle)
                     }
                     "AR_WISATA_BUDAYA" -> {
-                        findNavController().navigate(R.id.arFragment)
+                        val bottomNav = activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNav)
+                        if (bottomNav != null) {
+                            bottomNav.selectedItemId = R.id.arFragment
+                        } else {
+                            findNavController().navigate(R.id.arFragment)
+                        }
                     }
                 }
             }

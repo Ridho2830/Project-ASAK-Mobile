@@ -47,7 +47,13 @@ class AchievementUnlockDialog : DialogFragment() {
         view.findViewById<Button>(R.id.btnUnlockClaim).setOnClickListener {
             dismiss()
             AchievementUnlockManager.onDialogDismissed()
-            findNavController().navigate(R.id.homeFragment)
+            
+            val bottomNav = activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNav)
+            if (bottomNav != null) {
+                bottomNav.selectedItemId = R.id.homeFragment
+            } else {
+                findNavController().navigate(R.id.homeFragment)
+            }
         }
     }
 

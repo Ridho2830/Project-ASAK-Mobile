@@ -1,6 +1,5 @@
 package com.unram.asakv2.backend
 
-import com.unram.asakv2.backend.jobs.initCronJobs
 import com.unram.asakv2.backend.plugins.configureFirebase
 import com.unram.asakv2.backend.plugins.configureRouting
 import com.unram.asakv2.backend.plugins.configureSerialization
@@ -17,5 +16,4 @@ fun Application.module() {
     configureSerialization()
     configureFirebase()
     configureRouting()
-    initCronJobs()
 }

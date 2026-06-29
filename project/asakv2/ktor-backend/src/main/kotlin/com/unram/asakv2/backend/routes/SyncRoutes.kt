@@ -24,6 +24,11 @@ fun Route.syncRoutes() {
                 return@post
             }
 
+            application.log.info("=== MENERIMA SYNC DATA ===")
+            application.log.info("User ID: ${request.user_id}")
+            application.log.info("Jumlah Sesi Kuis: ${request.quiz_sessions.size} item")
+            application.log.info("Jumlah Progres Huruf: ${request.huruf_progress.size} item")
+
             val batch = db.batch()
 
             request.quiz_sessions.forEach { session ->
@@ -35,7 +40,7 @@ fun Route.syncRoutes() {
                 }
                 val data = session.toMutableMap()
                 data["user_id"] = request.user_id
-                batch.set(sessionRef, data)
+                batch.set(sessionRef, data as Map<String, Any>)
             }
 
             request.huruf_progress.forEach { progress ->
@@ -45,14 +50,16 @@ fun Route.syncRoutes() {
                     val progressRef = db.collection("user_huruf_progress").document(docId)
                     val data = progress.toMutableMap()
                     data["user_id"] = request.user_id
-                    batch.set(progressRef, data)
+                    batch.set(progressRef, data as Map<String, Any>)
                 }
             }
 
             batch.commit().get()
+            application.log.info("Status: SUKSES sinkronisasi data ke Firestore Cloud.")
 
             call.respond(HttpStatusCode.OK, mapOf("status" to "success", "message" to "Data successfully synced"))
         } catch (e: Exception) {
+            application.log.error("Status: GAGAL sinkronisasi data. Detail: ${e.message}", e)
             call.respond(HttpStatusCode.InternalServerError, mapOf("status" to "error", "message" to (e.message ?: "Unknown error")))
         }
     }

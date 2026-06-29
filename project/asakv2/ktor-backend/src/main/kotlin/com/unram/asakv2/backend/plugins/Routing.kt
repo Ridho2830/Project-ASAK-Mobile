@@ -1,6 +1,5 @@
 package com.unram.asakv2.backend.plugins
 
-import com.unram.asakv2.backend.routes.leaderboardRoutes
 import com.unram.asakv2.backend.routes.statisticRoutes
 import com.unram.asakv2.backend.routes.syncRoutes
 import io.ktor.server.application.*
@@ -15,7 +14,6 @@ fun Application.configureRouting() {
         
         route("/api/v1") {
             syncRoutes()
-            leaderboardRoutes()
             statisticRoutes()
         }
     }

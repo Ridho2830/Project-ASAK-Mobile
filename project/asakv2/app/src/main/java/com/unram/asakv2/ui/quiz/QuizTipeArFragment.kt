@@ -57,7 +57,12 @@ class QuizTipeArFragment : Fragment() {
         tvArTitle.text = "Scan Aksara Stage $stageId"
 
         btnOpenAr.setOnClickListener {
-            findNavController().navigate(R.id.arFragment)
+            val bottomNav = activity?.findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottomNav)
+            if (bottomNav != null) {
+                bottomNav.selectedItemId = R.id.arFragment
+            } else {
+                findNavController().navigate(R.id.arFragment)
+            }
         }
 
         btnNext.setOnClickListener {
